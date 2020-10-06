@@ -16,6 +16,7 @@ import java.io.Reader
 import java.net.HttpURLConnection
 import java.net.Proxy
 import java.net.URL
+import java.util.*
 import javax.net.ssl.HttpsURLConnection
 
 
@@ -24,13 +25,14 @@ object ChutneyServerApiUtils {
     val LOG = Logger.getInstance(HttpRequests::class.java)
 
     fun checkRemoteServerUrlConfig(project: Project): Boolean {
-        if (ChutneyServerApiUtils.getRemoteServerUrl().isNullOrBlank()) {
+        val settingsInstance = ChutneySettings.getInstance()
+        if (getRemoteServerUrl().isNullOrBlank() || settingsInstance.getRemoteUser().isNullOrBlank() || settingsInstance.getRemotePassword().isNullOrBlank()) {
             EventDataLogger.logError(
-                "Missing remote server url <br> <a href=\"configure\">Configure</a>",
-                project,
-                NotificationListener { notification, hyperlinkEvent ->
-                    ShowSettingsUtil.getInstance().showSettingsDialog(project, "Chutney")
-                })
+                    " <a href=\"configure\">Configure</a> Missing remote configuration server, please check url, user and password",
+                    project,
+                    NotificationListener { notification, hyperlinkEvent ->
+                        ShowSettingsUtil.getInstance().showSettingsDialog(project, "Chutney")
+                    })
             return false
         }
         return true
@@ -58,8 +60,15 @@ object ChutneyServerApiUtils {
 
     inline fun <reified T> execute(query: String, requestMethod: String, body: String): T {
         val url = URL(query)
+
+        val remoteUser = ChutneySettings.getInstance().getRemoteUser()
+        val remotePassword = ChutneySettings.getInstance().getRemotePassword()
+
+        val encodedAuth = Base64.getEncoder().encodeToString("$remoteUser:$remotePassword".toByteArray())
+        val authHeaderValue = "Basic $encodedAuth"
         val connection = url.openConnection(Proxy.NO_PROXY) as HttpURLConnection
         connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8")
+        connection.setRequestProperty("Authorization", authHeaderValue)
         connection.doOutput = true
         connection.doInput = true
         connection.requestMethod = requestMethod

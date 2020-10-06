@@ -23,6 +23,9 @@ class DynamicActionGroup : ActionGroup() {
     }
 
     override fun getChildren(event: AnActionEvent?): Array<out AnAction> {
+        val project = event?.project ?: return emptyArray()
+        if (!ChutneyServerApiUtils.checkRemoteServerUrlConfig(project)) return emptyArray()
+
         val file = event?.getData(DataKeys.VIRTUAL_FILE) ?: return emptyArray()
         val id = ChutneyUtil.getChutneyScenarioIdFromFileName(file.name)
         val inCampaigns = inCampaigns(id!!)

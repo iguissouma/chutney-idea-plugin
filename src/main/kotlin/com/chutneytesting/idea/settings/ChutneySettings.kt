@@ -27,8 +27,26 @@ class ChutneySettings : PersistentStateComponent<ChutneySettings.State> {
         return this.myState.remoteServerUrl
     }
 
+    fun setRemoteUser(user: String) {
+        this.myState.remoteUser = user
+    }
+
+    fun getRemoteUser(): String? {
+        return this.myState.remoteUser
+    }
+
+    fun setRemotePassword(password: String) {
+        this.myState.remotePassword = password
+    }
+
+    fun getRemotePassword(): String? {
+        return this.myState.remotePassword
+    }
+
     class State {
         var remoteServerUrl: String? = ""
+        var remoteUser: String? = ""
+        var remotePassword: String? = ""
     }
 
     companion object {

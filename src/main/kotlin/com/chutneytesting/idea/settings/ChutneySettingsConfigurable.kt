@@ -2,6 +2,7 @@ package com.chutneytesting.idea.settings
 
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.options.Configurable
+import com.intellij.ui.components.JBPasswordField
 import com.intellij.ui.components.JBTextField
 import com.intellij.util.ui.FormBuilder
 import java.awt.BorderLayout
@@ -11,13 +12,17 @@ import javax.swing.JPanel
 class ChutneySettingsConfigurable(private var chutneySettings: ChutneySettings) : Configurable {
 
     val remoteServerField: JBTextField = JBTextField()
+    val remoteUserField: JBTextField = JBTextField()
+    val remotePasswordField: JBPasswordField = JBPasswordField()
 
     fun ChutneySettingsConfigurable(chutneySettings: ChutneySettings) {
         this.chutneySettings = chutneySettings
     }
 
     override fun isModified(): Boolean {
-        return remoteServerField.text != chutneySettings.getRemoteServerUrl() ?: false
+        return remoteServerField.text != chutneySettings.getRemoteServerUrl()
+                || remoteUserField.text != chutneySettings.getRemoteUser()
+                || remotePasswordField.text != chutneySettings.getRemotePassword() ?: false
     }
 
     override fun getDisplayName(): String {
@@ -26,14 +31,23 @@ class ChutneySettingsConfigurable(private var chutneySettings: ChutneySettings) 
 
     override fun apply() {
         this.chutneySettings.setRemoteServerUrl(remoteServerField.text)
+        this.chutneySettings.setRemoteUser(remoteUserField.text)
+        this.chutneySettings.setRemotePassword(remotePasswordField.text)
     }
 
     override fun createComponent(): JComponent? {
-        remoteServerField.text = ChutneySettings.getInstance().getRemoteServerUrl() ?: ""
+        val settingsInstance = ChutneySettings.getInstance()
+        remoteServerField.text = settingsInstance.getRemoteServerUrl() ?: ""
+        remoteUserField.text = settingsInstance.getRemoteUser() ?: ""
+        remotePasswordField.text = settingsInstance.getRemotePassword() ?: ""
 
         val myWrapper = JPanel(BorderLayout())
         val centerPanel =
-            FormBuilder.createFormBuilder().addLabeledComponent("Remote Server: ", remoteServerField).panel
+                FormBuilder.createFormBuilder()
+                        .addLabeledComponent("Remote Server: ", remoteServerField)
+                        .addLabeledComponent("User: ", remoteUserField)
+                        .addLabeledComponent("Password: ", remotePasswordField)
+                        .panel
         myWrapper.add(centerPanel, BorderLayout.NORTH)
 
         return myWrapper

@@ -21,6 +21,7 @@ class AddRemoveScenarioInCampaignAction(
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project ?: return
+        if (!ChutneyServerApiUtils.checkRemoteServerUrlConfig(project)) return
         try {
             val query: String = if (selected) {
                 //remove from campaign
