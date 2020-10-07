@@ -2,12 +2,16 @@
     <id>com.chutneytesting.idea.chutney-idea-plugin</id>
     <name>Chutney</name>
     <vendor email="support@chutneytesting.com" url="https://github.com/chutney-testing/chutney">ChutneyTesting</vendor>
-    <version>0.8.0</version>
+    <version>0.9.0</version>
     <description><![CDATA[
         <p>A plugin to help you easily edit, run chutney scenario files.</p><br/>
     ]]></description>
 
     <change-notes><![CDATA[
+    Version 0.9.0<br>
+      <ul>
+          <li>Add authentication on api</li>
+      </ul>
       Version 0.8.0<br>
       <ul>
           <li>Update to 2020.2 SDK</li>
