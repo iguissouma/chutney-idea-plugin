@@ -47,7 +47,7 @@ object ChutneyServerApiUtils {
         }
     }
 
-    fun getRemoteDatabaseUrl() = "${ChutneyServerApiUtils.getRemoteServerUrl()}/api/v1/admin/database/execute/jdbc"
+    fun getRemoteDatabaseUrl() = "${getRemoteServerUrl()}/api/v1/admin/database/execute/jdbc"
 
 
     inline fun <reified T> post(query: String, body: String): T {

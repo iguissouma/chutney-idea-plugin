@@ -8,8 +8,10 @@ import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBPasswordField
 import com.intellij.ui.components.JBTextField
 import com.intellij.util.ui.FormBuilder
+import com.intellij.util.ui.UIUtil
 import java.awt.BorderLayout
 import java.awt.Color
+import java.awt.Dimension
 import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -28,7 +30,7 @@ class ChutneySettingsConfigurable(private var chutneySettings: ChutneySettings) 
     override fun isModified(): Boolean {
         return remoteServerField.text != chutneySettings.getRemoteServerUrl()
                 || remoteUserField.text != chutneySettings.getRemoteUser()
-                || remotePasswordField.text != chutneySettings.getRemotePassword() ?: false
+                || remotePasswordField.password != chutneySettings.getRemotePassword() ?: false
     }
 
     override fun getDisplayName(): String {
@@ -52,9 +54,9 @@ class ChutneySettingsConfigurable(private var chutneySettings: ChutneySettings) 
 
         checkConnectionButton.addActionListener {
             try {
-                ChutneyServerApiUtils.post<Base>(ChutneyServerApiUtils.getRemoteDatabaseUrl(), "(select 1 from campaign)")
+                ChutneyServerApiUtils.post<Base>("${ChutneyServerApiUtils.getRemoteServerUrl()}/api/v1/admin/database/execute/jdbc", "(select 1 from campaign)")
                 checkLabel.text = "Connection successfull"
-                checkLabel.foreground = Color.GREEN
+                checkLabel.foreground = Color.decode("#297642")
             } catch (exception: Exception) {
                 checkLabel.text = "Connection failed"
                 checkLabel.foreground = Color.RED
@@ -69,10 +71,11 @@ class ChutneySettingsConfigurable(private var chutneySettings: ChutneySettings) 
                         .addLabeledComponent("Remote Server: ", remoteServerField)
                         .addLabeledComponent("User: ", remoteUserField)
                         .addLabeledComponent("Password: ", remotePasswordField)
-                        .addComponent(checkConnectionButton)
+                        .addComponentToRightColumn(checkConnectionButton)
                         .addComponent(checkLabel)
                         .panel
         myWrapper.add(centerPanel, BorderLayout.NORTH)
+
 
         return myWrapper
     }
