@@ -35,7 +35,7 @@ class AddScenarioToLocalServer : RemoteScenarioBaseAction() {
             }
             val query: String = "$localServerURL/api/v1/admin/database/execute/jdbc"
             val body =
-                "insert into scenario(id, title, description, content, version) values($id, '$titleAndDescription', '$titleAndDescription', '$content', 'v2.1')"
+                "insert into scenario(id, title, description, content, version) values($id, '$titleAndDescription', '$titleAndDescription', '$content', 2.1)"
             val result = ChutneyServerApiUtils.post<Base>(query, body)
             EventDataLogger.logInfo("Scenario Added to Local Server.<br>", project)
         } catch (e: Exception) {

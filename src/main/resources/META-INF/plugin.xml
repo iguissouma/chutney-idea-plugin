@@ -8,6 +8,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    Version 0.10.0<br>
+      <ul>
+          <li>Fix version sent when updating scenario on remote server</li>
+      </ul>
     Version 0.9.0<br>
       <ul>
           <li>Add authentication on api</li>

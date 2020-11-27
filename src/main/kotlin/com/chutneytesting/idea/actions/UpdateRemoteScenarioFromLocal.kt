@@ -32,7 +32,7 @@ class UpdateRemoteScenarioFromLocal : RemoteScenarioBaseAction() {
         }
         val id = ChutneyUtil.getChutneyScenarioIdFromFileName(file.name)
         val escapeSql = StringEscapeUtils.escapeSql(hJsonString)
-        val body = "update scenario set content='$escapeSql', version='v2.1' where id = '$id'"
+        val body = "update scenario set content='$escapeSql', version=2.1 where id = '$id'"
         try {
             ChutneyServerApiUtils.post<Any>(query, body)
             EventDataLogger.logInfo(
