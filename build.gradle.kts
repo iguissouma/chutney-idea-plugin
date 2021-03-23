@@ -9,7 +9,7 @@ configurations.all {
 }
 
 group = "com.chutneytesting.idea"
-version = "1.6-SNAPSHOT"
+version = "1.7-SNAPSHOT"
 
 repositories {
     jcenter()
