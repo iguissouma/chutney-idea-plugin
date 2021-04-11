@@ -9,11 +9,8 @@ import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.util.SystemInfo
-import com.intellij.openapi.util.text.StringUtil
 import com.intellij.util.PathUtil
-import com.intellij.util.containers.ContainerUtil
 import com.intellij.util.ui.UIUtil
-import org.springframework.boot.loader.JarLauncher
 import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -132,22 +129,22 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             commandLine.addParameter("-Dfile.encoding=" + charset.name())
             //commandLine.addParameter("-Xdebug");
             //commandLine.addParameter("-Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=y");
-            val file = File(PathUtil.getJarPathForClass(JarLauncher::class.java))
+            val file = File(PathUtil.toSystemIndependentName(PathManager.getPluginsPath() + "/chutney-idea-plugin/lib/chutney-idea-server-1.2.13.jar"))
             commandLine.workDirectory = file.parentFile
             commandLine.addParameter("-jar")
             commandLine.addParameter(file.name)
-            commandLine.addParameter("-cp")
-            commandLine.addParameter(classpath)
+            //commandLine.addParameter("-cp")
+            //commandLine.addParameter(classpath)
             commandLine.addParameter("--server.port=" + settings.port)
             commandLine.addParameter("--configuration-folder=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/conf/"))
-            //commandLine.addParameter("-Dloader.path=C://Users//IG6862BN//.IntelliJIdea2019.2//system//plugins-sandbox//plugins//Chutney-idea//lib//lib//mapper-mercuri-1.0-SNAPSHOT.jar");
+            commandLine.addParameter("-Dloader.path=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/dependencies/"))
             //commandLine.addParameter(String.valueOf(settings.getPort()));
             //commandLine.addParameter("--runnerMode");
             //commandLine.addParameter(settings.getRunnerMode().name());
             return commandLine
         }
 
-        private val classpath: String
+       /* private val classpath: String
             private get() {
                 val classes = arrayOf<Class<*>>(JarLauncher::class.java)
                 val result: MutableList<String> = ContainerUtil.newArrayList()
@@ -157,7 +154,7 @@ class ChutneyServer(settings: ChutneyServerSettings) {
                     result.add(file.absolutePath)
                 }
                 return StringUtil.join(result, File.pathSeparator)
-            }
+            }*/
     }
 
     init {
