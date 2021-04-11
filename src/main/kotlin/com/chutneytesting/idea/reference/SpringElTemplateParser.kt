@@ -98,15 +98,6 @@ object SpringElTemplateParser {
         }
     }
 
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val s = "\"{\"idPRM\": \"\${#idPrm}\",\"idDT\": \"\${#idDT}\"\n}\""
-        val parse = parse(s)
-        for (textRange in parse) {
-            println("textRange = " + textRange.startOffset + "==>" + textRange.endOffset)
-        }
-    }
-
     private class Bracket(internal val bracket: Char, internal val pos: Int) {
         fun compatibleWithCloseBracket(closeBracket: Char): Boolean {
             return if (bracket == '{') {

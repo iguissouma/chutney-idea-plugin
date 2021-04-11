@@ -133,25 +133,6 @@ class ChutneyStepImplBuilder {
 
 }
 
-
-fun main() {
-    val prm = "30000111898410"
-    val x = Scenario("Consulter les caractéristiques d'un PRM") {
-        Given("le PRM $prm") {
-            Step("substeps sample") {
-                ContextPutTask(mapOf("idPrm" to prm))
-            }
-        }
-        When("on demande les caractéristiques du PRM") {
-            HttpGetTask(target = "ICOEUR_REFERENTIEL_CERTIF_IPARC", uri = "/api/v1/compteurs/${"idPrm".spEL()}")
-        }
-        Then("les informations renvoyées sont cohérentes") {
-            JsonAssertTask(document = json("body".spELVar), expected = mapOf("$.prm" to "idPrm".spEL()))
-        }
-    }
-    println(x)
-}
-
 const val JSON_PATH_ROOT = "\$"
 val String.spELVar: String
     get() = "#$this"
