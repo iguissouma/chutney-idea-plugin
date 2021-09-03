@@ -4,6 +4,7 @@ import com.chutneytesting.idea.ChutneyUtil
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
+import org.jetbrains.annotations.NotNull
 
 class ChutneyYamlLineMarkerProvider : ChutneyLineMarkerProvider() {
     override fun getLineMarkerInfo(psiElement: PsiElement): LineMarkerInfo<*>? {
@@ -18,5 +19,8 @@ class ChutneyYamlLineMarkerProvider : ChutneyLineMarkerProvider() {
         return null
     }
 
-    override fun collectSlowLineMarkers(elements: List<PsiElement>, result: Collection<LineMarkerInfo<*>?>) {}
+    override fun collectSlowLineMarkers(
+        elements: MutableList<out PsiElement>,
+        result:  MutableCollection<in LineMarkerInfo<*>>
+    ) {}
 }

@@ -1,3 +1,4 @@
+/*
 package com.chutneytesting.dsl
 
 
@@ -65,7 +66,8 @@ class KotlinJsr223ChutneyKtsScriptEngineFactory : KotlinJsr223JvmScriptEngineFac
     protected fun JvmScriptCompilationConfigurationBuilder.dependenciesFromCurrentContext() {
         val currentClassLoader = Thread.currentThread().contextClassLoader
         val classPath = listOf<File>()
-        /*if (lastClassLoader == null || lastClassLoader != currentClassLoader) {
+        */
+/*if (lastClassLoader == null || lastClassLoader != currentClassLoader) {
             scriptCompilationClasspathFromContext(
                 classLoader = currentClassLoader,
                 wholeClasspath = true,
@@ -74,7 +76,8 @@ class KotlinJsr223ChutneyKtsScriptEngineFactory : KotlinJsr223JvmScriptEngineFac
                 lastClassLoader = currentClassLoader
                 lastClassPath = it
             }
-        } else lastClassPath!!*/
+        } else lastClassPath!!*//*
+
         val classpathIdeaPlugin = File(ChutneyPluginPaths.chutneyIdeaPluginLibPath).listFiles()
             ?.filter { it.canonicalPath.endsWith(".jar") }
             ?.map { it }
@@ -94,3 +97,4 @@ class KotlinJsr223ChutneyKtsScriptEngineFactory : KotlinJsr223JvmScriptEngineFac
         ) { ScriptArgsWithTypes(arrayOf(emptyArray<String>()), arrayOf(Array<String>::class)) }
     }
 }
+*/

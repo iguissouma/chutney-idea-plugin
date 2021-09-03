@@ -4,6 +4,8 @@ import com.chutneytesting.idea.actions.Base
 import com.chutneytesting.idea.util.ChutneyServerApiUtils
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.options.Configurable
+import com.intellij.openapi.options.SearchableConfigurable
+import com.intellij.openapi.project.Project
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBPasswordField
 import com.intellij.ui.components.JBTextField
@@ -16,25 +18,26 @@ import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JPanel
 
-class ChutneySettingsConfigurable(private var chutneySettings: ChutneySettings) : Configurable {
+class ChutneySettingsConfigurable :
+    SearchableConfigurable, Configurable.NoScroll {
 
     val remoteServerField: JBTextField = JBTextField()
     val remoteUserField: JBTextField = JBTextField()
     val remotePasswordField: JBPasswordField = JBPasswordField()
-
-
-    fun ChutneySettingsConfigurable(chutneySettings: ChutneySettings) {
-        this.chutneySettings = chutneySettings
-    }
+    val chutneySettings: ChutneySettings = ChutneySettings.getInstance()
 
     override fun isModified(): Boolean {
         return remoteServerField.text != chutneySettings.getRemoteServerUrl()
                 || remoteUserField.text != chutneySettings.getRemoteUser()
-                || remotePasswordField.password != chutneySettings.getRemotePassword() ?: false
+                || !remotePasswordField.password.equals(chutneySettings.getRemotePassword() ?: false)
     }
 
     override fun getDisplayName(): String {
         return "Chutney"
+    }
+
+    override fun getId(): String {
+        return "chutney.tools.settings"
     }
 
     override fun apply() {

@@ -1,6 +1,7 @@
 # Chutney Plugin for IntelliJ IDEA-based IDEs
+<!-- Plugin description -->
 This plugin provides support for Writing/Running Chutney scenarios files in IntelliJ IDEA based IDEs.
-
+<!-- Plugin description end -->
 ![welcome](./docs/Screenshot 2020-09-06 at 16.54.55.png)
 
 

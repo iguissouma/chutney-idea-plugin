@@ -1,4 +1,5 @@
 package com.chutneytesting.idea.runner
+/*
 
 import com.chutneytesting.dsl.ChutneyFileScript
 import com.chutneytesting.dsl.ScriptManager
@@ -6,6 +7,7 @@ import com.chutneytesting.idea.ChutneyUtil
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
+import org.jetbrains.annotations.NotNull
 import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngineFactory
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -29,18 +31,21 @@ class ChutneyDslLineMarkerProvider : ChutneyLineMarkerProvider() {
         val scriptContent = "5 + 10"
         //val fromScript: Int = KtsObjectLoader(this.javaClass.classLoader).load<Int>(scriptContent)
         //println(fromScript)
-        /*with(ScriptManager.getEngineByExtension("kts")) {
+        */
+/*with(ScriptManager.getEngineByExtension("kts")) {
             eval("val x = 3")
             val res2 = eval("x + 2")
             // assertEquals(5, res2)
-        }*/
+        }*//*
+
         // SpringBootKotlinScriptEngineFactory().scriptEngine.also { println(it.eval(scriptContent)) }
 
         //val res = ChutneyKotlinScriptEngineFactory.factory.scriptEngine.eval(psiElement.containingFile.text)
         //val chutneyScenario = KtsObjectLoader().load<ChutneyFileScript.ChutneyScenario>(psiElement.containingFile.text)
         //println(res)
         //
-        /* val kotlinDynamicCompiler = KotlinDynamicCompiler()
+        */
+/* val kotlinDynamicCompiler = KotlinDynamicCompiler()
          var errorCount = 0
          val classLoaders = mutableListOf<ClassLoader>()
 
@@ -67,7 +72,8 @@ class ChutneyDslLineMarkerProvider : ChutneyLineMarkerProvider() {
 
          } catch (e: Exception) {
              e.printStackTrace()
-         }*/
+         }*//*
+
         fun evalFile(scriptFile: File): ResultWithDiagnostics<EvaluationResult> {
 
             val compilationConfiguration = createJvmCompilationConfigurationFromTemplate<ChutneyFileScript>()
@@ -97,8 +103,8 @@ class ChutneyDslLineMarkerProvider : ChutneyLineMarkerProvider() {
     }
 
     override fun collectSlowLineMarkers(
-        elements: List<PsiElement>,
-        result: Collection<LineMarkerInfo<*>?>
+        elements:  MutableList<out PsiElement>,
+        result:  MutableCollection<in LineMarkerInfo<*>>
     ) {
     }
 
@@ -122,3 +128,4 @@ class ChutneyDslLineMarkerProvider : ChutneyLineMarkerProvider() {
         return outStream.toString().trim() to errStream.toString().trim()
     }
 }
+*/

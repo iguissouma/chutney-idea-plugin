@@ -59,8 +59,8 @@ class ChutneyToolWindowManager(private val myProject: Project) {
             myProject,
             true
         )
-        myToolWindow.isToHideOnEmptyContent = true
-        myToolWindow.icon = ChutneyToolWindow
+        //myToolWindow.isToHideOnEmptyContent = true
+        //myToolWindow.icon = ChutneyToolWindow
         myToolWindow.isAutoHide = true
         myToolWindow.setSplitMode(true, null)
         myContentManager = myToolWindow.contentManager

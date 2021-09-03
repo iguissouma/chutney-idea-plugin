@@ -1,6 +1,6 @@
 package com.chutneytesting.idea.runner
 
-import com.chutneytesting.dsl.ScriptManager
+//import com.chutneytesting.dsl.ScriptManager
 import com.chutneytesting.idea.ChutneyUtil
 import com.chutneytesting.idea.actions.converter.JsonSerializer
 import com.chutneytesting.idea.actions.converter.ScenarioV1ToV2Converter
@@ -21,11 +21,11 @@ import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
+//import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import org.jetbrains.yaml.psi.YAMLFile
 import java.io.File
-import kotlin.script.experimental.api.ResultValue
-import kotlin.script.experimental.api.valueOrThrow
+//import kotlin.script.experimental.api.ResultValue
+//import kotlin.script.experimental.api.valueOrThrow
 
 
 data class ScenarioBase(@SerializedName("scenario") val scenario: Scenario)
@@ -82,7 +82,7 @@ class JsonTestReportsParser(
                 ChutneyUtil.processJsonReference(virtualFile)
             //else SpringBootKotlinScriptEngineFactory(findFile.project).scriptEngine.eval(findFile.text) as String
             //else ScriptManager.getEngineByExtension("chutney.kts").eval(findFile.text) as String
-            else (ScriptManager.evalFile(File(findFile.virtualFile.path)).valueOrThrow().returnValue as ResultValue.Value).value as String
+            else error("unsupported")//(ScriptManager.evalFile(File(findFile.virtualFile.path)).valueOrThrow().returnValue as ResultValue.Value).value as String
         val jsonString = if (ChutneyUtil.isChutneyV1Json(findFile)) {
             mapper.toString(ScenarioV1ToV2Converter().getScenarioV2(json).asMap())
         } else {

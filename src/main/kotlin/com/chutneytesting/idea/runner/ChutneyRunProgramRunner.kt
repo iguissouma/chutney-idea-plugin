@@ -49,16 +49,16 @@ class ChutneyRunProgramRunner : AsyncProgramRunner<RunnerSettings>() {
             return Promise.resolve<RunContentDescriptor>(start(server, false, state, environment))
         }
         return ChutneyToolWindowManager.restartServer()
-            .thenAsync { it: ChutneyServer? ->
+            .thenAsync {
                 try {
                     return@thenAsync if (it == null) null else start(
                         it,
                         false,
                         state,
                         environment
-                    )?.let { it1 -> resolvedPromise<RunContentDescriptor>(it1) }
+                    )?.let { it1 -> resolvedPromise(it1) }
                 } catch (e: ExecutionException) {
-                    return@thenAsync rejectedPromise<RunContentDescriptor>(e)
+                    return@thenAsync rejectedPromise(e)
                 }
             }
 

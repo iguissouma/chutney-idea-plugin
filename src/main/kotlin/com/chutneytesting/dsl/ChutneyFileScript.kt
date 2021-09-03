@@ -1,3 +1,4 @@
+/*
 package com.chutneytesting.dsl
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -335,3 +336,4 @@ private fun compiledScriptUniqueName(
 
 private fun ByteArray.toHexString(): String = joinToString("", transform = { "%02x".format(it) })
 
+*/

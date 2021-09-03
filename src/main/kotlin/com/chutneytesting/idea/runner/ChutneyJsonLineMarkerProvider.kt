@@ -9,6 +9,7 @@ import com.intellij.json.psi.JsonObject
 import com.intellij.json.psi.JsonProperty
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
+import org.jetbrains.annotations.NotNull
 import javax.swing.Icon
 
 
@@ -41,7 +42,10 @@ class ChutneyJsonLineMarkerProvider : ChutneyLineMarkerProvider() {
         return null
     }
 
-    override fun collectSlowLineMarkers(list: List<PsiElement>, collection: Collection<LineMarkerInfo<*>>) {
+    override fun collectSlowLineMarkers(
+        list:  MutableList<out PsiElement>,
+        result:  MutableCollection<in LineMarkerInfo<*>>
+    ) {
 
     }
 

@@ -1,6 +1,6 @@
 package com.chutneytesting.idea.runner
 
-import com.chutneytesting.dsl.ScriptManager
+//import com.chutneytesting.dsl.ScriptManager
 import com.chutneytesting.idea.ChutneyUtil
 import com.chutneytesting.idea.actions.converter.ScenarioV2ToV1Converter
 import com.google.gson.Gson
@@ -21,8 +21,9 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.yaml.psi.YAMLFile
 import java.io.File
 import java.time.ZonedDateTime
-import kotlin.script.experimental.api.ResultValue
-import kotlin.script.experimental.api.valueOrThrow
+
+//import kotlin.script.experimental.api.ResultValue
+//import kotlin.script.experimental.api.valueOrThrow
 
 
 class JsonTestScenariosParser(
@@ -42,7 +43,7 @@ class JsonTestScenariosParser(
                 ChutneyUtil.processJsonReference(virtualFile)
             //else SpringBootKotlinScriptEngineFactory(project).scriptEngine.eval(text) as String
             //else ScriptManager.getEngineByExtension("chutney.kts").eval(text) as String
-            else (ScriptManager.evalFile(File(findFile.virtualFile.path)).valueOrThrow().returnValue as ResultValue.Value).value as String
+            else error("unsupported")//(ScriptManager.evalFile(File(findFile.virtualFile.path)).valueOrThrow().returnValue as ResultValue.Value).value as String
         val scenarioBase = if (ChutneyUtil.isChutneyV1Json(findFile)) {
             parseScenario(json)
         } else {

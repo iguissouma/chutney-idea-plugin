@@ -18,11 +18,6 @@ class PasteHJsonHandler(originalAction: EditorActionHandler) : EditorActionHandl
 
     private val myOriginalHandler: EditorActionHandler? = originalAction
 
-    override fun execute(editor: Editor?, dataContext: DataContext?, producer: Producer<Transferable>?) {
-        val caret = editor?.caretModel?.primaryCaret
-        doExecute(editor!!, caret, dataContext!!)
-    }
-
     private fun createAnEvent(action: AnAction, context: DataContext): AnActionEvent {
         val presentation = action.templatePresentation.clone()
         return AnActionEvent(null, context, ActionPlaces.UNKNOWN, presentation, ActionManager.getInstance(), 0)
@@ -47,6 +42,12 @@ class PasteHJsonHandler(originalAction: EditorActionHandler) : EditorActionHandl
             }
         }
         myOriginalHandler?.execute(editor, caret, dataContext)
+
+    }
+
+    override fun execute(editor: Editor?, dataContext: DataContext?, p2: Producer<out Transferable>?) {
+        val caret = editor?.caretModel?.primaryCaret
+        doExecute(editor!!, caret, dataContext!!)
 
     }
 }

@@ -6,7 +6,7 @@ import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.util.xmlb.XmlSerializerUtil
 
-@State(name = "ChutneySettings", storages = arrayOf(Storage("chutney.xml")))
+@State(name = "ChutneySettings", storages = [Storage("chutney.xml")])
 class ChutneySettings : PersistentStateComponent<ChutneySettings.State> {
 
     private val myState = State()
