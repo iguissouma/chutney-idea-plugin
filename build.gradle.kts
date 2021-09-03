@@ -70,7 +70,6 @@ intellij {
             enabled = false
         }
     }
-
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -89,12 +88,18 @@ detekt {
     config = files("./detekt-config.yml")
     buildUponDefaultConfig = true
 
+    ignoreFailures = true
     reports {
         html.enabled = false
         xml.enabled = false
         txt.enabled = false
     }
 }
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    ignoreFailures.set(true)
+}
+
 tasks {
     // Set the compatibility versions to 1.8
     withType<JavaCompile> {
@@ -143,5 +148,4 @@ tasks {
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
     }
-
 }
