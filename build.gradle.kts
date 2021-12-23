@@ -10,7 +10,7 @@ plugins {
     // Kotlin support
     id("org.jetbrains.kotlin.jvm") version "1.5.10"
     // gradle-intellij-plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
-    id("org.jetbrains.intellij") version "1.0"
+    id("org.jetbrains.intellij") version "1.3.0"
     // gradle-changelog-plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
     id("org.jetbrains.changelog") version "1.1.2"
     // detekt linter - read more: https://detekt.github.io/detekt/gradle.html
@@ -35,7 +35,6 @@ repositories {
     flatDir {
         dirs = setOf(file("libs"))
     }
-    maven { url = uri("https://dl.bintray.com/jetbrains/intellij-plugin-service") }
 }
 
 dependencies {
@@ -65,9 +64,13 @@ intellij {
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 
-    tasks {
+    tasks{
         buildSearchableOptions {
             enabled = false
+        }
+
+        runIde {
+            maxHeapSize = "2g"
         }
     }
 }
