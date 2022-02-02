@@ -68,7 +68,9 @@ class ChutneyRunConfigurationProducer :
 
     private fun findChutneyRunSettings(elements: Array<PsiElement>): ChutneyRunSettings? {
 
-        val files = elements.filter { ChutneyUtil.isChutneyJson(it.containingFile) }
+        val files = elements
+            .filter { it.containingFile != null }
+            .filter { ChutneyUtil.isChutneyJson(it.containingFile) }
             .map { it.containingFile.virtualFile }
             .toList()
 
@@ -145,7 +147,10 @@ class ChutneyRunConfigurationProducer :
         override fun provideSettings(psiElement: PsiElement): ChutneyRunSettings? {
             val psiFile = psiElement.containingFile ?: return null
             val virtualFile = psiFile.virtualFile
-            if (virtualFile == null || (!ChutneyUtil.isChutneyJson(psiFile) && !ChutneyUtil.isChutneyYaml(psiFile) && !ChutneyUtil.isChutneyDsl(psiFile))) {
+            if (virtualFile == null || (!ChutneyUtil.isChutneyJson(psiFile) && !ChutneyUtil.isChutneyYaml(psiFile) && !ChutneyUtil.isChutneyDsl(
+                    psiFile
+                ))
+            ) {
                 return null
             }
             return ChutneyRunSettings(scenarioFilePath = getPath(virtualFile), testType = TestType.SCENARIO_FILE)
