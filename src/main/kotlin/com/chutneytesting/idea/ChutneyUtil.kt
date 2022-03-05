@@ -49,8 +49,13 @@ object ChutneyUtil {
     }
 
     fun isChutneyDsl(ktPsi: PsiFile): Boolean {
-        return ktPsi.name.indexOf("chutney.kts") > 1
+        return ktPsi.name.indexOf(".kt") > 1
     }
+
+    fun isChutneyDsl(ktFile: VirtualFile): Boolean {
+        return ktFile.name.indexOf(".kt") > 1
+    }
+
 
     fun isIcefragJson(jsonPsi: PsiFile): Boolean {
         return jsonPsi.name.indexOf("icefrag.json") > 1

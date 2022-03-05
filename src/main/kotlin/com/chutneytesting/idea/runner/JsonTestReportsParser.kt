@@ -21,6 +21,7 @@ import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.testFramework.LightVirtualFile
 //import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import org.jetbrains.yaml.psi.YAMLFile
 import java.io.File
@@ -76,13 +77,13 @@ class JsonTestReportsParser(
         val findFile = ApplicationManager.getApplication()
             .runReadAction(Computable<PsiFile> { PsiManager.getInstance(project).findFile(jsonFile) })
         val virtualFile = findFile.virtualFile
-        //setIdeaIoUseFallback()
         val json =
             if (findFile is JsonFile || findFile is YAMLFile)
-                ChutneyUtil.processJsonReference(virtualFile)
-            //else SpringBootKotlinScriptEngineFactory(findFile.project).scriptEngine.eval(findFile.text) as String
-            //else ScriptManager.getEngineByExtension("chutney.kts").eval(findFile.text) as String
-            else error("unsupported")//(ScriptManager.evalFile(File(findFile.virtualFile.path)).valueOrThrow().returnValue as ResultValue.Value).value as String
+                if (virtualFile is LightVirtualFile) findFile.text else ChutneyUtil.processJsonReference(virtualFile)
+            else  {
+                error("Unsupported")
+            }
+
         val jsonString = if (ChutneyUtil.isChutneyV1Json(findFile)) {
             mapper.toString(ScenarioV1ToV2Converter().getScenarioV2(json).asMap())
         } else {

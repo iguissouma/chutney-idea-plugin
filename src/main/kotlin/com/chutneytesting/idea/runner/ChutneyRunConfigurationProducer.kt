@@ -12,6 +12,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.util.ObjectUtils
+import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import java.io.File
 import java.util.*
 
@@ -153,9 +154,23 @@ class ChutneyRunConfigurationProducer :
             ) {
                 return null
             }
-            return ChutneyRunSettings(scenarioFilePath = getPath(virtualFile), testType = TestType.SCENARIO_FILE)
+            return ChutneyRunSettings(scenarioFilePath = getPath(virtualFile), testType = TestType.SCENARIO_FILE).apply {
+                methodName = if (ChutneyUtil.isChutneyDsl(psiFile))
+                    getFullyQualifiedMethodName(psiElement)
+                else ""
+            }
         }
 
+        fun getFullyQualifiedMethodName(psiElement: PsiElement): String {
+            val methodName = psiElement.getKotlinFqName()?.asString() ?: error("cannot get fqName")
+            if (methodName.contains(" ") && methodName.contains(".")) {
+                return methodName.substringBeforeLast(".") + "." + "`${methodName.substringAfterLast(".")}`"
+            }
+            if (methodName.contains(" ")) {
+                return "`$methodName`"
+            }
+            return methodName
+        }
     }
 
     class ChutneyDirectoryRunSettingsProvider : ChutneyRunSettingsProvider {

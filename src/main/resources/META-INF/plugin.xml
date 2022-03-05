@@ -192,11 +192,6 @@
                     icon="AllIcons.Plugins.Updated"
                     text="Copy Scenario As Kotlin Dsl Action"
                     description="Copy scenario as kotlin Dsl action"/>
-            <!--<action id="Chutney.AddChutneyPluginAndIdeJarsAsDependencies"
-                    class="com.chutneytesting.idea.actions.AddChutneyPluginAndIdeJarsAsDependencies"
-                    icon="AllIcons.Plugins.Downloads"
-                    text="Add ChutneyPlugin And Ide Jars As Dependencies"
-                    description="Add chutneyPlugin And ide jars As dependencies"/>-->
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </group>
@@ -224,5 +219,6 @@
 
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
       <!--  <scriptDefinitionsProvider implementation="com.chutneytesting.dsl.ScenarioKotlinScriptProvider"/>
--->    </extensions>
+-->
+    </extensions>
 </idea-plugin>

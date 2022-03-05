@@ -45,6 +45,9 @@ dependencies {
     implementation("com.fasterxml.jackson.core", "jackson-databind", "2.9.9")
     implementation("com.fasterxml.jackson.core", "jackson-annotations", "2.9.9")
     implementation("com.fasterxml.jackson.dataformat", "jackson-dataformat-yaml", "2.9.9")
+    // https://mvnrepository.com/artifact/com.chutneytesting/chutney-kotlin-dsl
+    //implementation("com.chutneytesting", "chutney-kotlin-dsl", "0.1.13")
+
     implementation("me.andrz.jackson", "jackson-json-reference-core", "0.3.2") {
         // exclude("org.sl4j") does not exclude
         isTransitive = false // this exclude "org.sl4j"

@@ -12,7 +12,7 @@ object ChutneyRunConfigurationRefactoringHandler {
         element: PsiElement?
     ): RefactoringElementListener? {
         val fileAtElement = PsiUtilBase.asVirtualFile(element) ?: return null
-        val (directory, scenarioFilePath, _, _, _, _, testType) = configuration.getRunSettings()
+        val (directory, scenarioFilePath, _, _, _, _, _, testType) = configuration.getRunSettings()
         val path = fileAtElement.path
         if (testType === TestType.ALL_SCENARIO_IN_DIRECTORY) {
             val allInDirectory = FileUtil.toSystemIndependentName(directory)

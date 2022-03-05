@@ -7,6 +7,7 @@ data class ChutneyRunSettings(
     var directory: String = "",
     var scenarioFilePath: String = "",
     var scenariosFilesPath: String = "",
+    var methodName: String = "",
     var variables: ChutneyVariablesData = ChutneyVariablesData.create(mapOf()),
     var serverType: ServerType = ServerType.INTERNAL,
     var serverAddress: String = "",

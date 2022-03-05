@@ -13,7 +13,7 @@
 
 
         <extensions defaultExtensionNs="com.intellij">
-            <!--<codeInsight.lineMarkerProvider language="kotlin" implementationClass="com.chutneytesting.idea.runner.ChutneyDslLineMarkerProvider"/>-->
+            <codeInsight.lineMarkerProvider language="kotlin" implementationClass="com.chutneytesting.idea.runner.ChutneyKotlinLineMarkerProvider"/>
         </extensions>
 
 
