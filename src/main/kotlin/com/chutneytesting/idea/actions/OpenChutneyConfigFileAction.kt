@@ -20,24 +20,22 @@ class OpenChutneyConfigFileAction : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val project: Project = event.project ?: return
-        val chutneyJarfile = File(PathUtil.getJarPathForClass(JarLauncher::class.java))
-        val chutneyJarDirectory = chutneyJarfile.parentFile.absolutePath
-        // val ChutneyDirectoryConf = ChutneyJarDirectory + File.separator + "conf" + File.separator
         val chutneyDirectoryConf = PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/conf/")
         val confFile = chutneyDirectoryConf + "GLOBAL.json"
         val findFileByPath = LocalFileSystem.getInstance().findFileByPath(confFile)
         if (findFileByPath == null) {
             EventDataLogger.logWarning("Chutney ConfigFile <b>GLOBAL.json</b> can't be opened.<br>" +
-                    "<a href=\"file\">Show In Explorer</a>", project, NotificationListener { _, hyperlinkEvent ->
+                    "<a href=\"file\">Show In Explorer</a>", project
+            ) { _, hyperlinkEvent ->
                 if ("file" == hyperlinkEvent.description) {
                     //show file in explorer
                     val directory = File(chutneyDirectoryConf)
-                    if (! directory.exists()){
+                    if (!directory.exists()) {
                         directory.mkdirs()
                     }
                     ShowFilePathAction.openFile(directory)
                 }
-            })
+            }
             return
         }
         FileEditorManager.getInstance(project).openFile(findFileByPath, true)
