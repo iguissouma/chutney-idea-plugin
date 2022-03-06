@@ -13,6 +13,7 @@ object ChutneyRunSettingsSerializationUtils {
     private enum class Key(val key: String) {
         TEST_TYPE("configLocationType"),
         ALL_IN_DIRECTORY("allInDirectory"),
+        METHOD_NAME("methodName"),
         CONFIG_TYPE("configType"),
         SCENARIO_FILE("scenarioFile"),
         SERVER_ADDRESS("serverAddress"),
@@ -40,6 +41,7 @@ object ChutneyRunSettingsSerializationUtils {
             builder.serverAddress = serverAddress
         }
         builder.variables = ChutneyVariablesData.readExternal(element)
+        builder.methodName = readString(element, Key.METHOD_NAME, "")
         return builder
     }
 
@@ -79,6 +81,7 @@ object ChutneyRunSettingsSerializationUtils {
             writeString(element, Key.SERVER_ADDRESS, runSettings.serverAddress)
         }
         runSettings.variables.writeExternal(element)
+        writeString(element, Key.METHOD_NAME, runSettings.methodName)
     }
 
     private fun writeScenariosFile(element: Element, runSettings: ChutneyRunSettings) {
