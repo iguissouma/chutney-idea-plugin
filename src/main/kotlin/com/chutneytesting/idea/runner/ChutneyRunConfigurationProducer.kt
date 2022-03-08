@@ -11,8 +11,10 @@ import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.parentOfType
 import com.intellij.util.ObjectUtils
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
+import org.jetbrains.kotlin.psi.KtNamedFunction
 import java.io.File
 import java.util.*
 
@@ -148,14 +150,14 @@ class ChutneyRunConfigurationProducer :
         override fun provideSettings(psiElement: PsiElement): ChutneyRunSettings? {
             val psiFile = psiElement.containingFile ?: return null
             val virtualFile = psiFile.virtualFile
-            if (virtualFile == null || (!ChutneyUtil.isChutneyJson(psiFile) && !ChutneyUtil.isChutneyYaml(psiFile) && !ChutneyUtil.isChutneyDsl(
-                    psiFile
+            if (virtualFile == null || (!ChutneyUtil.isChutneyJson(psiFile) && !ChutneyUtil.isChutneyYaml(psiFile) && !ChutneyUtil.isChutneyDslMethod(
+                    psiElement.parent
                 ))
             ) {
                 return null
             }
             return ChutneyRunSettings(scenarioFilePath = getPath(virtualFile), testType = TestType.SCENARIO_FILE).apply {
-                methodName = if (ChutneyUtil.isChutneyDsl(psiFile))
+                methodName = if (ChutneyUtil.isChutneyDslMethod(psiElement))
                     getFullyQualifiedMethodName(psiElement)
                 else ""
             }

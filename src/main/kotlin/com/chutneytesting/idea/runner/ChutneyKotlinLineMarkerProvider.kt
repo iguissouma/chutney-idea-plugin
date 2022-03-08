@@ -1,14 +1,14 @@
 package com.chutneytesting.idea.runner
 
+import com.chutneytesting.idea.ChutneyUtil
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.psi.PsiElement
-import org.jetbrains.kotlin.idea.util.hasAnnotationWithShortName
 import org.jetbrains.kotlin.psi.KtNamedFunction
 
 class ChutneyKotlinLineMarkerProvider : ChutneyLineMarkerProvider() {
 
     override fun getLineMarkerInfo(psiElement: PsiElement): LineMarkerInfo<*>? {
-        if ((psiElement is KtNamedFunction) && psiElement.hasAnnotationWithShortName("KChutney")) {
+        if (ChutneyUtil.isChutneyDslMethod(psiElement) && psiElement is KtNamedFunction) {
             val displayName = "${psiElement.name}"
             return lineMarkerInfo(psiElement.funKeyword!!, displayName)
         }

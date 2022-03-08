@@ -7,9 +7,12 @@ import com.intellij.json.psi.JsonObject
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.util.Computable
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import me.andrz.jackson.JsonReferenceProcessor
 import org.jetbrains.annotations.ApiStatus
+import org.jetbrains.kotlin.idea.util.hasAnnotationWithShortName
+import org.jetbrains.kotlin.psi.KtNamedFunction
 import java.io.File
 
 object ChutneyUtil {
@@ -50,6 +53,11 @@ object ChutneyUtil {
 
     fun isChutneyDsl(ktPsi: PsiFile): Boolean {
         return ktPsi.name.indexOf(".kt") > 1
+    }
+
+    fun isChutneyDslMethod(psiElement: PsiElement): Boolean {
+        return isChutneyDsl(psiElement.containingFile) && (psiElement is KtNamedFunction)
+                && psiElement.hasAnnotationWithShortName("KChutney")
     }
 
     fun isChutneyDsl(ktFile: VirtualFile): Boolean {

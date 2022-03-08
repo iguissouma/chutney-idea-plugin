@@ -9,6 +9,7 @@ import com.intellij.openapi.vfs.newvfs.impl.FsRoot
 import org.jetbrains.kotlin.cli.common.repl.KotlinJsr223JvmScriptEngineFactoryBase
 import org.jetbrains.kotlin.cli.common.repl.ScriptArgsWithTypes
 import org.jetbrains.kotlin.jsr223.KotlinJsr223JvmScriptEngine4Idea
+import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
 import org.jetbrains.kotlin.script.util.scriptCompilationClasspathFromContextOrStlib
 import java.io.File
 import javax.script.ScriptContext

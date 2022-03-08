@@ -15,10 +15,12 @@ class ChutneyRunConfigurationType
                 return ChutneyRunConfiguration(project, this, "Chutney")
             }
 
+            @Deprecated("Deprecated in Java")
             override fun isConfigurationSingletonByDefault(): Boolean {
                 return true
             }
 
+            override fun getId(): String = "chutney-id"
         })
     }
 
@@ -27,4 +29,6 @@ class ChutneyRunConfigurationType
             return ConfigurationTypeUtil.findConfigurationType(ChutneyRunConfigurationType::class.java)
         }
     }
+
+
 }
