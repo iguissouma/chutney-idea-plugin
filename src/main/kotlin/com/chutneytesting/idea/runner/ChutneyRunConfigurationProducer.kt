@@ -157,7 +157,7 @@ class ChutneyRunConfigurationProducer :
                 return null
             }
             return ChutneyRunSettings(scenarioFilePath = getPath(virtualFile), testType = TestType.SCENARIO_FILE).apply {
-                methodName = if (ChutneyUtil.isChutneyDslMethod(psiElement))
+                methodName = if (ChutneyUtil.isChutneyDslMethod(psiElement.parent))
                     getFullyQualifiedMethodName(psiElement)
                 else ""
             }

@@ -11,6 +11,7 @@ import com.intellij.execution.testframework.sm.runner.OutputToGeneralTestEventsC
 import com.intellij.json.JsonFileType
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.compiler.CompilerManager
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleUtil
 import com.intellij.openapi.project.Project
@@ -29,6 +30,9 @@ class ChutneyJsonToTestEventConverter(
     val jsonFiles: List<VirtualFile?>
 ) : OutputToGeneralTestEventsConverter(testFrameworkName, consoleProperties) {
 
+    companion object{
+        private val LOG = Logger.getInstance(OutputToGeneralTestEventsConverter::class.java)
+    }
 
     fun moduleIsUpToDate(module: Module): Boolean {
         val compilerManager = CompilerManager.getInstance(project)
@@ -50,15 +54,17 @@ class ChutneyJsonToTestEventConverter(
                     if (!moduleIsUpToDate(module = module)) {
                         ProjectTaskManager.getInstance(project).build(module).blockingGet(60, TimeUnit.SECONDS)
                     }
-                    val eval =
-                        ChutneyKotlinJsr223JvmLocalScriptEngineFactory(virtualFile, project).scriptEngine.eval(
-                            """
+                    val script = """
                     import com.chutneytesting.kotlin.dsl.*    
                      
                     ${configuration.getRunSettings().methodName}()
-                """.trimIndent()
+                    """.trimIndent()
+                    LOG.info("evaluating script = $script")
+                    val eval =
+                        ChutneyKotlinJsr223JvmLocalScriptEngineFactory(virtualFile, project).scriptEngine.eval(
+                            script
                         )
-                    cacheEvaluation.put(index, eval)
+                    cacheEvaluation[index] = eval
                     if (eval is List<*>) {
                         eval.forEachIndexed { s_index, any ->
                             val lightVirtualFile = LightVirtualFile("test.chutney.json", JsonFileType.INSTANCE, "$any")
