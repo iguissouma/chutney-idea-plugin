@@ -8,11 +8,11 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.5.10"
+    id("org.jetbrains.kotlin.jvm") version "1.6.10"
     // gradle-intellij-plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
-    id("org.jetbrains.intellij") version "1.3.0"
+    id("org.jetbrains.intellij") version "1.4.0"
     // gradle-changelog-plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
-    id("org.jetbrains.changelog") version "1.1.2"
+    id("org.jetbrains.changelog") version "1.3.1"
     // detekt linter - read more: https://detekt.github.io/detekt/gradle.html
     id("io.gitlab.arturbosch.detekt") version "1.17.1"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
@@ -45,8 +45,9 @@ dependencies {
     implementation("com.fasterxml.jackson.core", "jackson-databind", "2.9.9")
     implementation("com.fasterxml.jackson.core", "jackson-annotations", "2.9.9")
     implementation("com.fasterxml.jackson.dataformat", "jackson-dataformat-yaml", "2.9.9")
-    // https://mvnrepository.com/artifact/com.chutneytesting/chutney-kotlin-dsl
-    //implementation("com.chutneytesting", "chutney-kotlin-dsl", "0.1.13")
+
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-script-util
+    implementation("org.jetbrains.kotlin:kotlin-script-util:1.6.10")
 
     implementation("me.andrz.jackson", "jackson-json-reference-core", "0.3.2") {
         // exclude("org.sl4j") does not exclude
@@ -81,11 +82,10 @@ configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
-// Configure gradle-changelog-plugin plugin.
-// Read more: https://github.com/JetBrains/gradle-changelog-plugin
+// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
-    version = properties("pluginVersion")
-    groups = emptyList()
+    version.set(properties("pluginVersion"))
+    groups.set(emptyList())
 }
 
 // Configure detekt plugin.

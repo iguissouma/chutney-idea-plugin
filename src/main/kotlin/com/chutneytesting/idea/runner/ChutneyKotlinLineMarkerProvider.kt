@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.psi.KtNamedFunction
 class ChutneyKotlinLineMarkerProvider : ChutneyLineMarkerProvider() {
 
     override fun getLineMarkerInfo(psiElement: PsiElement): LineMarkerInfo<*>? {
-        if (ChutneyUtil.isChutneyDslMethod(psiElement) && psiElement is KtNamedFunction) {
+        if (psiElement is KtNamedFunction && ChutneyUtil.isChutneyDslMethod(psiElement)) {
             val displayName = "${psiElement.name}"
             return lineMarkerInfo(psiElement.funKeyword!!, displayName)
         }
