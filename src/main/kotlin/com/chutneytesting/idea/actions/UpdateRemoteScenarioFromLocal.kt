@@ -34,15 +34,18 @@ class UpdateRemoteScenarioFromLocal : RemoteScenarioBaseAction() {
         val escapeSql = StringEscapeUtils.escapeSql(hJsonString)
         val body = "update scenario set content='$escapeSql', version=2.1 where id = '$id'"
         try {
-            ChutneyServerApiUtils.post<Any>(query, body)
-            EventDataLogger.logInfo(
-                "Remote scenario file updated with success.<br>" +
-                        "<a href=\"${getRemoteServerUrl()}/#/scenario/$id/execution/last\">Open in remote Chutney Server</a>",
-                project,
-                NotificationListener.URL_OPENING_LISTENER
-            )
-
-            EditorNotifications.getInstance(project).updateNotifications(file)
+            val post = ChutneyServerApiUtils.post<Map<String, Any?>>(query, body)
+            if (post["updatedRows"] as? Int == 1) {
+                EventDataLogger.logInfo(
+                    "Remote scenario file updated with success.<br>" +
+                            "<a href=\"${getRemoteServerUrl()}/#/scenario/$id/execution/last\">Open in remote Chutney Server</a>",
+                    project,
+                    NotificationListener.URL_OPENING_LISTENER
+                )
+                EditorNotifications.getInstance(project).updateNotifications(file)
+            } else {
+                EventDataLogger.logError("Remote scenario file could not be updated.<br>", project)
+            }
 
         } catch (e: Exception) {
             EventDataLogger.logError(e.toString(), project)
