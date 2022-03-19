@@ -107,10 +107,10 @@ class ChutneyKotlinSynchroniseWithRemoteLineMarkerProvider : LineMarkerProvider{
         val scenariosToUpdate = if (eval is List<*>) eval else listOf(eval)
         val query = ChutneyServerApiUtils.getRemoteDatabaseUrl()
 
-        scenariosToUpdate.filterNotNull().forEach { any ->
-            val id = any::class.members.firstOrNull { it.name == "id" }?.call(any) ?: return@forEach
-            val title = any::class.members.firstOrNull { it.name == "title" }?.call(any) ?: return@forEach
-            val escapeSql = StringEscapeUtils.escapeSql("$eval")
+        scenariosToUpdate.filterNotNull().forEach { scenario ->
+            val id = scenario::class.members.firstOrNull { it.name == "id" }?.call(scenario) ?: return@forEach
+            val title = scenario::class.members.firstOrNull { it.name == "title" }?.call(scenario) ?: return@forEach
+            val escapeSql = StringEscapeUtils.escapeSql("$scenario")
             val body = "update scenario set content='$escapeSql', version=2.1 where id = '$id'"
             try {
                 FilenameIndex.getFilesByName(
@@ -119,14 +119,14 @@ class ChutneyKotlinSynchroniseWithRemoteLineMarkerProvider : LineMarkerProvider{
                     GlobalSearchScope.moduleScope(module)
                 ).forEachIndexed { index, psiFile  ->
                     val document = PsiDocumentManager.getInstance(project).getDocument(psiFile) ?: return@forEachIndexed
-                    document.setText("$eval".replace("\r\n", "\n"))
+                    document.setText("$scenario".replace("\r\n", "\n"))
                     FileDocumentManager.getInstance().saveDocument(document)
                     UIUtil.invokeAndWaitIfNeeded(Runnable {
                         CodeStyleManager.getInstance(project).reformat(psiFile)
                     })
                 }
                 val post = ChutneyServerApiUtils.post<Map<String, Any?>>(query, body)
-                if (post["updatedRows"] as? Int == 1) {
+                if (post["updatedRows"] as? Double == 1.toDouble()) {
                     EventDataLogger.logInfo(
                         "Remote scenario file updated with success.<br>" +
                                 "<a href=\"${ChutneyServerApiUtils.getRemoteServerUrl()}/#/scenario/$id/execution/last\">Open in remote Chutney Server</a>",
@@ -134,7 +134,7 @@ class ChutneyKotlinSynchroniseWithRemoteLineMarkerProvider : LineMarkerProvider{
                         NotificationListener.URL_OPENING_LISTENER
                     )
                 } else {
-                    EventDataLogger.logError("Remote scenario file could not be updated.<br>", project)
+                    EventDataLogger.logError("Remote scenario file could not be updated.<br> cause: [${post["error"]}]", project)
                 }
             } catch (e: Exception) {
                 EventDataLogger.logError(e.toString(), project)

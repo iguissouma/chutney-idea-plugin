@@ -35,7 +35,7 @@ class UpdateRemoteScenarioFromLocal : RemoteScenarioBaseAction() {
         val body = "update scenario set content='$escapeSql', version=2.1 where id = '$id'"
         try {
             val post = ChutneyServerApiUtils.post<Map<String, Any?>>(query, body)
-            if (post["updatedRows"] as? Int == 1) {
+            if (post["updatedRows"] as? Double == 1.toDouble()) {
                 EventDataLogger.logInfo(
                     "Remote scenario file updated with success.<br>" +
                             "<a href=\"${getRemoteServerUrl()}/#/scenario/$id/execution/last\">Open in remote Chutney Server</a>",
