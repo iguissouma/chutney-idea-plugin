@@ -163,16 +163,6 @@ class ChutneyRunConfigurationProducer :
             }
         }
 
-        fun getFullyQualifiedMethodName(psiElement: PsiElement): String {
-            val methodName = psiElement.getKotlinFqName()?.asString() ?: error("cannot get fqName")
-            if (methodName.contains(" ") && methodName.contains(".")) {
-                return methodName.substringBeforeLast(".") + "." + "`${methodName.substringAfterLast(".")}`"
-            }
-            if (methodName.contains(" ")) {
-                return "`$methodName`"
-            }
-            return methodName
-        }
     }
 
     class ChutneyDirectoryRunSettingsProvider : ChutneyRunSettingsProvider {
@@ -200,3 +190,13 @@ class ChutneyRunConfigurationProducer :
 
 }
 
+fun getFullyQualifiedMethodName(psiElement: PsiElement): String {
+    val methodName = psiElement.getKotlinFqName()?.asString() ?: error("cannot get fqName")
+    if (methodName.contains(" ") && methodName.contains(".")) {
+        return methodName.substringBeforeLast(".") + "." + "`${methodName.substringAfterLast(".")}`"
+    }
+    if (methodName.contains(" ")) {
+        return "`$methodName`"
+    }
+    return methodName
+}

@@ -20,6 +20,11 @@ import com.intellij.task.ProjectTaskManager
 import com.intellij.testFramework.LightVirtualFile
 import java.util.concurrent.TimeUnit
 
+fun moduleIsUpToDate(module: Module): Boolean {
+    val compilerManager = CompilerManager.getInstance(module.project)
+    val compilerScope = compilerManager.createModuleCompileScope(module, true)
+    return compilerManager.isUpToDate(compilerScope)
+}
 
 class ChutneyJsonToTestEventConverter(
     testFrameworkName: String,
@@ -33,13 +38,6 @@ class ChutneyJsonToTestEventConverter(
     companion object{
         private val LOG = Logger.getInstance(OutputToGeneralTestEventsConverter::class.java)
     }
-
-    fun moduleIsUpToDate(module: Module): Boolean {
-        val compilerManager = CompilerManager.getInstance(project)
-        val compilerScope = compilerManager.createModuleCompileScope(module, true)
-        return compilerManager.isUpToDate(compilerScope)
-    }
-
 
     override fun onStartTesting() {
         ApplicationManager.getApplication().executeOnPooledThread {
