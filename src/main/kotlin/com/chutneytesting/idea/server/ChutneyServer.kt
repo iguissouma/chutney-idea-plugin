@@ -129,7 +129,7 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             commandLine.addParameter("-Dfile.encoding=" + charset.name())
             //commandLine.addParameter("-Xdebug");
             //commandLine.addParameter("-Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=y");
-            val file = File(PathUtil.toSystemIndependentName(PathManager.getPluginsPath() + "/chutney-idea-plugin/lib/chutney-idea-server-1.2.13.jar"))
+            val file = File(PathUtil.toSystemIndependentName(PathManager.getPluginsPath() + "/chutney-idea-plugin/lib/chutney-idea-server-1.2.14.jar"))
             commandLine.workDirectory = file.parentFile
             commandLine.addParameter("-jar")
             commandLine.addParameter(file.name)
