@@ -1,6 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.changelog.markdownToHTML
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -32,13 +31,10 @@ repositories {
     maven {
         url = uri("https://repo1.maven.org/maven2")
     }
-    flatDir {
-        dirs = setOf(file("libs"))
-    }
+    mavenLocal()
 }
 
 dependencies {
-    implementation(fileTree("libs"))
     implementation("com.google.guava", "guava", "28.1-jre")
     implementation("org.hjson", "hjson", "2.1.1")
     implementation("com.fasterxml.jackson.core", "jackson-core", "2.9.9")
@@ -55,6 +51,11 @@ dependencies {
     }
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
     testImplementation("junit", "junit", "4.12")
+
+    runtimeOnly("com.chutneytesting", "chutney-idea-server", "1.2.14") {
+        isTransitive = false
+    }
+
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

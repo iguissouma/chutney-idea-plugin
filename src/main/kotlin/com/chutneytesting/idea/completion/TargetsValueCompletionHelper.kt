@@ -3,11 +3,9 @@ package com.chutneytesting.idea.completion
 import com.google.gson.Gson
 import com.intellij.openapi.application.PathManager
 import com.intellij.util.PathUtil
-import org.springframework.boot.loader.JarLauncher
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileReader
-import java.util.*
 
 object TargetsValueCompletionHelper {
     //e.printStackTrace();
