@@ -62,7 +62,7 @@ dependencies {
     }
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
     testImplementation("junit", "junit", "4.12")
-    runtimeOnly("chutney-testing", "chutney-idea-server", "1.2.14", ext = "jar") {
+    runtimeOnly("chutney-testing", "chutney-idea-server", properties("chutneyIdeaServerVersion"), ext = "jar") {
         isTransitive = false
     }
 

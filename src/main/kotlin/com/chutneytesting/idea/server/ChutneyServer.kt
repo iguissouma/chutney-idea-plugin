@@ -14,6 +14,7 @@ import com.intellij.util.ui.UIUtil
 import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
+import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 class ChutneyServer(settings: ChutneyServerSettings) {
@@ -122,6 +123,10 @@ class ChutneyServer(settings: ChutneyServerSettings) {
         }
 
         private fun createCommandLine(settings: ChutneyServerSettings): GeneralCommandLine {
+            val libFolder = File(PathUtil.toSystemIndependentName(PathManager.getPluginsPath() + "/chutney-idea-plugin/lib"))
+            val ideaServerJarFile = libFolder.walk().find { it.name.startsWith("chutney-idea-server-") && it.name.endsWith(".jar") }
+                ?: throw RuntimeException("chutney-idea-server jar file not found in plugin lib folder")
+
             val commandLine = GeneralCommandLine()
             commandLine.exePath = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"
             val charset = StandardCharsets.UTF_8
@@ -129,10 +134,10 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             commandLine.addParameter("-Dfile.encoding=" + charset.name())
             //commandLine.addParameter("-Xdebug");
             //commandLine.addParameter("-Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=y");
-            val file = File(PathUtil.toSystemIndependentName(PathManager.getPluginsPath() + "/chutney-idea-plugin/lib/chutney-idea-server-1.2.14.jar"))
-            commandLine.workDirectory = file.parentFile
+
+            commandLine.workDirectory = ideaServerJarFile.parentFile
             commandLine.addParameter("-jar")
-            commandLine.addParameter(file.name)
+            commandLine.addParameter(ideaServerJarFile.name)
             //commandLine.addParameter("-cp")
             //commandLine.addParameter(classpath)
             commandLine.addParameter("--server.port=" + settings.port)
@@ -144,17 +149,24 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             return commandLine
         }
 
-       /* private val classpath: String
-            private get() {
-                val classes = arrayOf<Class<*>>(JarLauncher::class.java)
-                val result: MutableList<String> = ContainerUtil.newArrayList()
-                for (clazz in classes) {
-                    val path = PathUtil.getJarPathForClass(clazz)
-                    val file = File(path)
-                    result.add(file.absolutePath)
-                }
-                return StringUtil.join(result, File.pathSeparator)
-            }*/
+        private fun getProperty(name: String): String {
+            val properties = Properties()
+            val versionPropertiesFile = this.javaClass.getResourceAsStream("/gradle.properties")
+            properties.load(versionPropertiesFile)
+            return properties.getProperty(name).orEmpty()
+        }
+
+        /* private val classpath: String
+             private get() {
+                 val classes = arrayOf<Class<*>>(JarLauncher::class.java)
+                 val result: MutableList<String> = ContainerUtil.newArrayList()
+                 for (clazz in classes) {
+                     val path = PathUtil.getJarPathForClass(clazz)
+                     val file = File(path)
+                     result.add(file.absolutePath)
+                 }
+                 return StringUtil.join(result, File.pathSeparator)
+             }*/
     }
 
     init {
