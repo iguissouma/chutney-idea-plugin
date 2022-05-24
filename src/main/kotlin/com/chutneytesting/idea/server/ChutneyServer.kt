@@ -149,13 +149,6 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             return commandLine
         }
 
-        private fun getProperty(name: String): String {
-            val properties = Properties()
-            val versionPropertiesFile = this.javaClass.getResourceAsStream("/gradle.properties")
-            properties.load(versionPropertiesFile)
-            return properties.getProperty(name).orEmpty()
-        }
-
         /* private val classpath: String
              private get() {
                  val classes = arrayOf<Class<*>>(JarLauncher::class.java)
