@@ -2,7 +2,6 @@ package com.chutneytesting.idea.actions
 
 import com.chutneytesting.idea.logger.EventDataLogger
 import com.intellij.ide.actions.ShowFilePathAction
-import com.intellij.notification.NotificationListener
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.PathManager
@@ -11,7 +10,6 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.util.PathUtil
-import org.springframework.boot.loader.JarLauncher
 import java.io.File
 
 class OpenChutneyConfigFileAction : AnAction() {
