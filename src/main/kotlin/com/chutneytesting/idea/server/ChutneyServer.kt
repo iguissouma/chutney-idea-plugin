@@ -134,7 +134,7 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             commandLine.addParameter("-Dfile.encoding=" + charset.name())
             //commandLine.addParameter("-Xdebug");
             //commandLine.addParameter("-Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=y");
-
+            commandLine.addParameter("-Dloader.path=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/dependencies/"))
             commandLine.workDirectory = ideaServerJarFile.parentFile
             commandLine.addParameter("-jar")
             commandLine.addParameter(ideaServerJarFile.name)
@@ -142,7 +142,6 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             //commandLine.addParameter(classpath)
             commandLine.addParameter("--server.port=" + settings.port)
             commandLine.addParameter("--chutney.configuration-folder=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/conf"))
-            commandLine.addParameter("-Dloader.path=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/dependencies/"))
             //commandLine.addParameter(String.valueOf(settings.getPort()));
             //commandLine.addParameter("--runnerMode");
             //commandLine.addParameter(settings.getRunnerMode().name());
