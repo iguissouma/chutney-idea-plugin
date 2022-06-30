@@ -19,7 +19,7 @@ class OpenChutneyConfigFileAction : AnAction() {
     override fun actionPerformed(event: AnActionEvent) {
         val project: Project = event.project ?: return
         val chutneyDirectoryConf = PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/conf/")
-        val confFile = chutneyDirectoryConf + "GLOBAL.json"
+        val confFile = chutneyDirectoryConf + "environment/" +"GLOBAL.json"
         val findFileByPath = LocalFileSystem.getInstance().findFileByPath(confFile)
         if (findFileByPath == null) {
             EventDataLogger.logWarning("Chutney ConfigFile <b>GLOBAL.json</b> can't be opened.<br>" +

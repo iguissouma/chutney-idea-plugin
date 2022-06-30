@@ -141,7 +141,7 @@ class ChutneyServer(settings: ChutneyServerSettings) {
             //commandLine.addParameter("-cp")
             //commandLine.addParameter(classpath)
             commandLine.addParameter("--server.port=" + settings.port)
-            commandLine.addParameter("--chutney.configuration-folder=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/conf/"))
+            commandLine.addParameter("--chutney.configuration-folder=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/conf"))
             commandLine.addParameter("-Dloader.path=" + PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/dependencies/"))
             //commandLine.addParameter(String.valueOf(settings.getPort()));
             //commandLine.addParameter("--runnerMode");
