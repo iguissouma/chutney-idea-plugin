@@ -13,7 +13,7 @@ object TargetsValueCompletionHelper {
         get() {
             try {
                 val chutneyDirectoryConf = PathUtil.toSystemIndependentName(PathManager.getConfigPath() + "/chutney-idea-plugin/conf/")
-                val confFile = chutneyDirectoryConf + "GLOBAL.json"
+                val confFile = chutneyDirectoryConf + "environment/" + "GLOBAL.json"
                 val fileReader = FileReader(File(confFile))
                 val result = Gson().fromJson(fileReader, Result::class.java)
                 return if (result?.targets == null) emptyList() else result.targets!!
